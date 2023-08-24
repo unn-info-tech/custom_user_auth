@@ -110,7 +110,12 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+    # Add the Argon2 password hasher
+    {
+        'NAME': 'django.contrib.auth.password_validation.Argon2PasswordValidator',
+    },
 ]
+
 
 
 # Internationalization
