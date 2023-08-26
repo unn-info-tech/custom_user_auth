@@ -160,3 +160,14 @@ EMAIL_HOST_USER = "Your email address"
 EMAIL_HOST_PASSWORD = "your app password"
 
 # To get your Gmail app password: https://support.google.com/accounts/answer/185833
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
+
+CACHE_MIDDLEWARE_SECONDS = 600  # Set to 10 minutes
+

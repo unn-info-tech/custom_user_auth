@@ -4,21 +4,22 @@ from django.utils import timezone
 import random
 from datetime import timedelta
 from config import settings
+from django.core.cache import cache
+import time
 
 @shared_task
-def send_otp_email(email):
-    otp = generate_otp()
-    expiration_time = timezone.now() + timedelta(minutes=10)  # Adjust the expiration time as needed
-
-    send_otp_to_user(email, otp)
-    return otp, expiration_time
-
 def generate_otp():
-    otp = str(random.randint(100000, 999999))
+    return str(random.randint(100000, 999999))
+
+def generate_and_store_otp(email):
+    otp = generate_otp()
+    expiration_time = 300  # OTP expires in 5 minutes (300 seconds)
+    current_timestamp = int(time.time())
+    cache_key = f"otp_{email}"
+    cache.set(cache_key, {'otp': otp, 'timestamp': current_timestamp}, expiration_time)
     return otp
 
-
-def send_otp_to_user(email, otp):
+def send_otp_email(email, otp):
     subject = 'Your OTP for Login'
     message = f'Your OTP for login is: {otp}. This OTP is valid for a limited time.'
     from_email = settings.EMAIL_HOST_USER

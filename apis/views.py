@@ -10,8 +10,11 @@ from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.hashers import make_password
 from .models import CustomUser
-from .tasks import send_otp_email, generate_otp
+from .tasks import send_otp_email, generate_and_store_otp
 from django.core.exceptions import ObjectDoesNotExist
+import time
+from django.core.cache import cache
+
 
 
 # REGISTER
@@ -47,8 +50,13 @@ def user_login(request):
         if user:
             if user.check_password(password):
                 # Generate and send OTP
-                # otp = send_otp_email.delay(user.email) # this is for celery 
-                generated_test_otp = generate_otp() # this is for test which will be printed in the terminal
+
+                # this is for test which will be printed in the terminal,
+                # you can work even without config. celery
+                generated_test_otp = generate_and_store_otp(user.email) 
+                
+                # this one is for celery
+                # send_otp_email(user.email, generated_otp) 
                 print('This is otp for test:', generated_test_otp)
 
                 # Store the values in the session for later validation
@@ -65,42 +73,12 @@ def user_login(request):
 
 
 
-
-'''# LOGIN
-@api_view(['POST'])
-def user_login(request):
-    serializer = UserLoginSerializer(data=request.data)
-    if serializer.is_valid():
-        email = serializer.validated_data['email']
-        password = serializer.validated_data['password']
-        
-        user = CustomUser.objects.filter(email=email).first()
-        if user:
-            # Check user's password
-            if user.check_password(password):
-                # Authenticate user
-                auth_user = authenticate(username=user.email, password=password)
-                if auth_user:
-                    token, _ = Token.objects.get_or_create(user=user)
-                    return Response({'token': token.key}, status=status.HTTP_200_OK)
-                else:
-                    return Response({'error': 'Authentication failed'}, status=status.HTTP_401_UNAUTHORIZED)
-            else:
-                return Response({'error': 'Invalid password'}, status=status.HTTP_401_UNAUTHORIZED)
-        else:
-            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)'''
-
 # Verify OTP and issue token
 @api_view(['POST'])
 def verify_otp(request):
     serializer = VerifyOTPSerializer(data=request.data)
     if serializer.is_valid():
         input_otp = serializer.validated_data['otp']
-
-        # Get values which was strored
-        generated_test_otp = request.session.get('generated_test_otp')
         user_id = request.session.get('user_id')
 
         try:
@@ -108,15 +86,30 @@ def verify_otp(request):
         except ObjectDoesNotExist:
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        # Check if the provided OTP matches the generated OTP
-        if generated_test_otp == input_otp:
-            token, _ = Token.objects.get_or_create(user=user)
+        # Get the cached OTP and timestamp
+        cache_key = f"otp_{user.email}"  # Use the user's email as the cache key
+        cached_data = cache.get(cache_key)
+        if cached_data is None:
+            return Response({'error': 'OTP expired or not generated'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        cached_otp = cached_data.get('otp')
+        cached_timestamp = cached_data.get('timestamp')
+        
+        # Check if the provided OTP matches the cached OTP
+        if input_otp == cached_otp:
+            # Check if OTP has expired
+            current_timestamp = int(time.time())
+            expiration_time = 15  # OTP expires in 5 minutes (300 seconds)
+            if current_timestamp - cached_timestamp <= expiration_time:
+                # OTP is valid and within the expiration time
+                token, _ = Token.objects.get_or_create(user=user)
 
-            # Remove the OTP from the session to prevent reusing
-            del request.session['generated_test_otp']
-            del request.session['user_id']
+                # Remove the OTP data from the cache to prevent reusing
+                cache.delete(cache_key)
 
-            return Response({'token': token.key}, status=status.HTTP_200_OK)
+                return Response({'token': token.key}, status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'OTP expired'}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response({'error': 'Invalid OTP'}, status=status.HTTP_400_BAD_REQUEST)
 
