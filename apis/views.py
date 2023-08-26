@@ -3,15 +3,17 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from .serializers import UserRegistrationSerializer, UserLoginSerializer
+from .serializers import UserRegistrationSerializer, UserLoginSerializer, VerifyOTPSerializer
 
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.hashers import make_password
 from .models import CustomUser
+from .tasks import send_otp_email, generate_otp
+from django.core.exceptions import ObjectDoesNotExist
 
-    
+
 # REGISTER
 @api_view(['POST'])
 def register_user(request):
@@ -32,7 +34,39 @@ def register_user(request):
     
 
 
+
 # LOGIN
+@api_view(['POST'])
+def user_login(request):
+    serializer = UserLoginSerializer(data=request.data)
+    if serializer.is_valid():
+        email = serializer.validated_data['email']
+        password = serializer.validated_data['password']
+        
+        user = CustomUser.objects.filter(email=email).first()
+        if user:
+            if user.check_password(password):
+                # Generate and send OTP
+                # otp = send_otp_email.delay(user.email) # this is for celery 
+                generated_test_otp = generate_otp() # this is for test which will be printed in the terminal
+                print('This is otp for test:', generated_test_otp)
+
+                # Store the values in the session for later validation
+                request.session['generated_test_otp'] = generated_test_otp
+                request.session['user_id'] = user.id
+                
+                return Response({'message': 'OTP sent successfully'}, status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'Invalid password'}, status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+'''# LOGIN
 @api_view(['POST'])
 def user_login(request):
     serializer = UserLoginSerializer(data=request.data)
@@ -56,7 +90,38 @@ def user_login(request):
         else:
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)'''
+
+# Verify OTP and issue token
+@api_view(['POST'])
+def verify_otp(request):
+    serializer = VerifyOTPSerializer(data=request.data)
+    if serializer.is_valid():
+        input_otp = serializer.validated_data['otp']
+
+        # Get values which was strored
+        generated_test_otp = request.session.get('generated_test_otp')
+        user_id = request.session.get('user_id')
+
+        try:
+            user = CustomUser.objects.get(id=user_id)
+        except ObjectDoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        # Check if the provided OTP matches the generated OTP
+        if generated_test_otp == input_otp:
+            token, _ = Token.objects.get_or_create(user=user)
+
+            # Remove the OTP from the session to prevent reusing
+            del request.session['generated_test_otp']
+            del request.session['user_id']
+
+            return Response({'token': token.key}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Invalid OTP'}, status=status.HTTP_400_BAD_REQUEST)
+
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 

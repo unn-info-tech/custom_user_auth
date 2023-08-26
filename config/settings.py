@@ -43,14 +43,6 @@ INSTALLED_APPS = [
     'apis',
 ]
 
-AUTH_USER_MODEL = 'apis.CustomUser'
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ],
-    # Other settings...
-}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -139,3 +131,32 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#----------------------------
+
+# AUTH TOKEN 
+AUTH_USER_MODEL = 'apis.CustomUser'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    # Other settings...
+}
+
+#  configuration for celery
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
+# configuration for sending emails
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "Your email address"
+EMAIL_HOST_PASSWORD = "your app password"
+
+# To get your Gmail app password: https://support.google.com/accounts/answer/185833

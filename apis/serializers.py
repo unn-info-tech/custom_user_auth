@@ -10,8 +10,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         fields = ['username', 'email', 'password']
 
 
-
-
 class UserLoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
+
+
+class VerifyOTPSerializer(serializers.Serializer):
+    otp = serializers.CharField()
