@@ -2,12 +2,13 @@ from django.shortcuts import render
 
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from .serializers import UserRegistrationSerializer, UserLoginSerializer, VerifyOTPSerializer
 
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 from django.contrib.auth.hashers import make_password
 from .models import CustomUser
 from .tasks import send_otp_email, generate_and_store_otp
@@ -54,10 +55,12 @@ def user_login(request):
                 # this is for test which will be printed in the terminal,
                 # you can work even without config. celery
                 generated_test_otp = generate_and_store_otp(user.email) 
-                
-                # this one is for celery
-                # send_otp_email(user.email, generated_otp) 
                 print('This is otp for test:', generated_test_otp)
+
+                # this one is for celery
+                '''
+                send_otp_email.delay(user.email, generated_otp)
+                '''
 
                 # Store the values in the session for later validation
                 request.session['generated_test_otp'] = generated_test_otp
@@ -92,6 +95,7 @@ def verify_otp(request):
         if cached_data is None:
             return Response({'error': 'OTP expired or not generated'}, status=status.HTTP_400_BAD_REQUEST)
         
+        print(cached_data)
         cached_otp = cached_data.get('otp')
         cached_timestamp = cached_data.get('timestamp')
         
@@ -99,7 +103,7 @@ def verify_otp(request):
         if input_otp == cached_otp:
             # Check if OTP has expired
             current_timestamp = int(time.time())
-            expiration_time = 15  # OTP expires in 5 minutes (300 seconds)
+            expiration_time = 60  # OTP expires in 1 minutes (60 seconds)
             if current_timestamp - cached_timestamp <= expiration_time:
                 # OTP is valid and within the expiration time
                 token, _ = Token.objects.get_or_create(user=user)
@@ -116,24 +120,9 @@ def verify_otp(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
-
-
-#UPDATE
-@api_view(['PUT', 'PATCH'])
-@permission_classes([IsAuthenticated])
-def update_profile(request):
-    user = request.user
-    serializer = UserRegistrationSerializer(instance=user, data=request.data, partial=True)
-    if serializer.is_valid():
-        hashed_password = make_password(serializer.validated_data['password'])
-        user = serializer.save(password=hashed_password)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 #PROFILE
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def user_profile(request):
     try:
@@ -146,8 +135,25 @@ def user_profile(request):
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
+#UPDATE
+@api_view(['PUT', 'PATCH'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def update_profile(request):
+    user = request.user
+    serializer = UserRegistrationSerializer(instance=user, data=request.data, partial=True)
+    if serializer.is_valid():
+        hashed_password = make_password(serializer.validated_data['password'])
+        user = serializer.save(password=hashed_password)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
 # LOGOUT
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def user_logout(request):
     if request.method == 'POST':
@@ -162,6 +168,7 @@ def user_logout(request):
 
 # DELETE
 @api_view(['DELETE'])
+@authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def delete_user(request):
     user = request.user

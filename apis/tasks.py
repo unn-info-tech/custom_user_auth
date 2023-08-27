@@ -13,10 +13,9 @@ def generate_otp():
 
 def generate_and_store_otp(email):
     otp = generate_otp()
-    expiration_time = 300  # OTP expires in 5 minutes (300 seconds)
     current_timestamp = int(time.time())
     cache_key = f"otp_{email}"
-    cache.set(cache_key, {'otp': otp, 'timestamp': current_timestamp}, expiration_time)
+    cache.set(cache_key, {'otp': otp, 'timestamp': current_timestamp})
     return otp
 
 def send_otp_email(email, otp):
