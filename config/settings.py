@@ -155,14 +155,15 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
+CELERY_IMPORTS = ("apis.tasks",)
 
 # configuration for sending emails
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "Your email address"
-EMAIL_HOST_PASSWORD = "your app password"
+EMAIL_HOST_USER = "uktamovnimatillo5@gmail.com"
+EMAIL_HOST_PASSWORD = "jyrtdrabmisvhewh"
 
 # To get your Gmail app password: https://support.google.com/accounts/answer/185833
 #---------------------------------

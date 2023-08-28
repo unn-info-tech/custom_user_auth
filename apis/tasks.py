@@ -20,7 +20,7 @@ def generate_and_store_otp(email):
 
 def send_otp_email(email, otp):
     subject = 'Your OTP for Login'
-    message = f'Your OTP for login is: {otp}. This OTP is valid for a limited time.'
+    message = f'Your OTP for login is: {otp}. This OTP is valid for 2 minutes.  '
     from_email = settings.EMAIL_HOST_USER
     recipient_list = [email]
     send_mail(subject, message, from_email, recipient_list)

@@ -28,8 +28,8 @@ from drf_yasg import openapi
         status.HTTP_201_CREATED: UserRegistrationSerializer,
         status.HTTP_400_BAD_REQUEST: "Bad Request",
     },
-    operation_summary="Register a new user",
-    operation_description="Create a new user account by providing the required information.\n"
+    operation_summary="**Register a new user**",
+    operation_description="**Create a new user account by providing the required information.**\n"
                           "To register a new user:\n"
                           "1. Click the 'Try it out' button.\n"
                           "2. Fill out the request body with required user details in the 'Request Body' section.\n"
@@ -78,8 +78,8 @@ def register_user(request):
         status.HTTP_404_NOT_FOUND: "User not found",
         status.HTTP_400_BAD_REQUEST: "Bad Request",
     },
-    operation_summary="User Login",
-    operation_description="Log in a user by providing their email and password.\n"
+    operation_summary="**User Login**",
+    operation_description="**Log in a user by providing their email and password.**\n"
                           "To log in and obtain an authentication token:\n"
                           "1. Click the 'Try it out' button.\n"
                           "2. Fill out the request body with your registered email and password.\n"
@@ -87,6 +87,7 @@ def register_user(request):
                           "   If the provided credentials are valid, an OTP will be generated and sent to your registered email address.\n"
                           "   Additionally, the OTP will be displayed in the terminal for testing purposes.\n"
                           "5. Proceed to the 'Verify OTP' API endpoint and complete the request body by entering the OTP you received in your email(or printed in the terminal).\n"
+                          "   **Please note that the OTP is valid for a duration of 2 minutes.**"
                           
 )
 @api_view(['POST'])
@@ -115,10 +116,9 @@ def user_login(request):
                 print('This is otp for test:', generated_test_otp)
 
                 # this one is for celery
+
+                send_otp_email(user.email, generated_test_otp)
                 
-                '''
-                send_otp_email.delay(user.email, generated_test_otp)
-                '''
                 
 
                 # Store the values in the session for later validation
@@ -144,8 +144,8 @@ def user_login(request):
         status.HTTP_400_BAD_REQUEST: "Bad Request",
         status.HTTP_404_NOT_FOUND: "User not found",
     },
-    operation_summary="Verify OTP",
-    operation_description="""Verify the provided OTP and issue a token if the OTP is valid.
+    operation_summary="**Verify OTP**",
+    operation_description="""**Verify the provided OTP and issue a token if the OTP is valid.**
                           To verify the OTP and obtain an authentication token:
                           1. Click the 'Try it out' button.
                           2. Fill out the request body with OTP you received after verifying your email.
@@ -188,7 +188,7 @@ def verify_otp(request):
         if input_otp == cached_otp:
             # Check if OTP has expired
             current_timestamp = int(time.time())
-            expiration_time = 60  # OTP expires in 1 minutes (60 seconds)
+            expiration_time = 60  # OTP expires in 2 minutes (120 seconds)
             if current_timestamp - cached_timestamp <= expiration_time:
                 # OTP is valid and within the expiration time
                 token, _ = Token.objects.get_or_create(user=user)
@@ -212,8 +212,8 @@ def verify_otp(request):
         status.HTTP_200_OK: "User profile retrieved successfully",
         status.HTTP_500_INTERNAL_SERVER_ERROR: "Internal Server Error",
     },
-    operation_summary="User Profile",
-    operation_description="""Retrieve the user's profile information.
+    operation_summary="**User Profile**",
+    operation_description="""**Retrieve the user's profile information.**
     1.Click the 'Try it out' button.
     2.Enter the authentication token you obtained after verifying the OTP into the 'Authorization' field.
     Example: Token 'your_token' followed by a space(Token 2a16f6b6cfa1f84b647bba8ea45b3ab11a7b3b93).
@@ -255,8 +255,8 @@ def user_profile(request):
         status.HTTP_401_UNAUTHORIZED: "Unauthorized",
         status.HTTP_500_INTERNAL_SERVER_ERROR: "Internal Server Error",
     },
-    operation_summary="Update User Profile",
-    operation_description="""Update the user's profile information.
+    operation_summary="**Update User Profile**",
+    operation_description="""**Update the user's profile information.**
     1.Click the 'Try it out' button.
     2.Enter the authentication token you obtained after verifying the OTP into the 'Authorization' field.
     Example: Token 'your_token' followed by a space(Token 2a16f6b6cfa1f84b647bba8ea45b3ab11a7b3b93).
@@ -297,8 +297,8 @@ def update_profile(request):
         status.HTTP_401_UNAUTHORIZED: "Unauthorized",
         status.HTTP_500_INTERNAL_SERVER_ERROR: "Internal Server Error",
     },
-    operation_summary="User Logout",
-    operation_description="""Logout the currently authenticated user.
+    operation_summary="**User Logout**",
+    operation_description="""**Logout the currently authenticated user.**
     1.Click the 'Try it out' button.
     2.Enter the authentication token you obtained after verifying the OTP into the 'Authorization' field.
     Example: Token 'your_token' followed by a space(Token 2a16f6b6cfa1f84b647bba8ea45b3ab11a7b3b93).
@@ -339,8 +339,8 @@ def user_logout(request):
         status.HTTP_204_NO_CONTENT: "User deleted successfully",
         status.HTTP_500_INTERNAL_SERVER_ERROR: "Internal Server Error",
     },
-    operation_summary="Delete User",
-    operation_description="""Logout the currently authenticated user.
+    operation_summary="**Delete User**",
+    operation_description="""**Logout the currently authenticated user.**
     1.Click the 'Try it out' button.
     2.Enter the authentication token you obtained after verifying the OTP into the 'Authorization' field.
     Example: Token 'your_token' followed by a space(Token 2a16f6b6cfa1f84b647bba8ea45b3ab11a7b3b93).
