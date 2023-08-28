@@ -4,6 +4,7 @@
 I'm excited to announce that the project has been successfully deployed on a hosting platform and is now accessible for use. You have two convenient options to explore the project's capabilities:
 
 1. **Access the Deployed Project:**
+_All features have been tested and are working seamlessly using the Swagger UI interface._
    You can access the project through the Swagger UI interface, which provides a user-friendly way to interact with the project's APIs. Simply navigate to the provided Swagger UI link:
 
    - Hosting Platform: [PythonAnywhere](https://www.pythonanywhere.com/)
@@ -16,7 +17,7 @@ I'm excited to announce that the project has been successfully deployed on a hos
    From both the Swagger UI and Redoc interfaces, you can explore the available APIs, endpoints, and functionalities with ease. It's a great way to test, develop, or interact with the project.
 
 
-2. **Access APIs Individually:**
+3. **Access APIs Individually:**
    If you're interested in specific API endpoints, you can also access them directly by using their respective URLs. This is a handy option if you want to quickly test or integrate specific functionalities.
 The project offers a variety of API endpoints that you can access to perform specific actions. Instead of using the Swagger interface, you can directly interact with these APIs by using their respective paths. Below, you'll find a list of available endpoints along with brief descriptions of their functionalities:
 
