@@ -25,7 +25,7 @@ from rest_framework.permissions import IsAuthenticated
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Custom User Token Authentication and Authorization",
+        title="CustomUser - Token based Authentication and Authorization",
         default_version='v1',
         description="Welcome to the Authentication API! This API provides a step-by-step guide for user authentication and profile management. Follow these steps to use the API effectively:\n"
                     "1. **Register**: Begin by registering a new user account.\n"
