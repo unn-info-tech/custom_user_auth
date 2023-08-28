@@ -106,9 +106,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
     # Add the Argon2 password hasher
-    {
-        'NAME': 'django.contrib.auth.password_validation.Argon2PasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.Argon2PasswordValidator',
+    # },
 ]
 
 
@@ -162,8 +162,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "uktamovnimatillo5@gmail.com"
-EMAIL_HOST_PASSWORD = "jyrtdrabmisvhewh"
+EMAIL_HOST_USER = "your email"
+EMAIL_HOST_PASSWORD = "app password"
 
 # To get your Gmail app password: https://support.google.com/accounts/answer/185833
 #---------------------------------
