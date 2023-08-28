@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'apis',
+    'drf_yasg',
+
+    
 ]
 
 
@@ -144,6 +147,8 @@ REST_FRAMEWORK = {
     # Other settings...
 }
 
+#--------------------------
+
 #  configuration for celery
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
@@ -160,8 +165,9 @@ EMAIL_HOST_USER = "Your email address"
 EMAIL_HOST_PASSWORD = "your app password"
 
 # To get your Gmail app password: https://support.google.com/accounts/answer/185833
+#---------------------------------
 
-
+# settings for cache stroring
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
@@ -170,4 +176,5 @@ CACHES = {
 }
 
 CACHE_MIDDLEWARE_SECONDS = 600  # Set to 10 minutes
+#--------------------------------------------------------
 
