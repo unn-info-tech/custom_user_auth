@@ -112,8 +112,7 @@ python manage.py runserver
 
 
 ## Configuring Celery with Redis
-### Note: OTP Printing for Celery Debugging
-
+**Note: OTP Printing for Celery Debugging**
 During the testing phase, if you encounter any issues with the Celery tasks related to OTP verification, the one-time password (OTP) will be printed in the terminal. You have the option to use the project even without configuring this feature.
 
 
