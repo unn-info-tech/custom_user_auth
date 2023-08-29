@@ -116,7 +116,6 @@ python manage.py runserver
 
 During the testing phase, if you encounter any issues with the Celery tasks related to OTP verification, the one-time password (OTP) will be printed in the terminal. You have the option to use the project even without configuring this feature.
 
-If your Django project requires asynchronous task processing using Celery and you want to configure it with Redis as the message broker on your local machine, follow these steps:
 
 1. **Install and Set Up Redis:**
 
