@@ -111,7 +111,7 @@ python manage.py runserver
 ```
 
 
-## Configuring Celery with Redis
+## Configuring Celery with Redis for sending OTP to your email
 **Note: OTP Printing for Celery Debugging**
 During the testing phase, if you encounter any issues with the Celery tasks related to OTP verification, the one-time password (OTP) will be printed in the terminal. You have the option to use the project even without configuring this feature.
 
@@ -129,7 +129,7 @@ During the testing phase, if you encounter any issues with the Celery tasks rela
    
 
 2. **Install Celery And Redis:**
-- In your project's virtual environment, install Celery using pip:
+- In your project's virtual environment, install Celery and Redis using pip:
   ```
   pip install celery
   pip install redis
@@ -141,7 +141,7 @@ During the testing phase, if you encounter any issues with the Celery tasks rela
    Open your Django project's `settings.py` file. This file contains all the configuration settings for your project.
 
 2. **Locate Email Configuration:**
-   Find the section in your `settings.py` file where the email configuration settings are defined. This is the block of code you provided earlier:
+   Find the section in your `settings.py` file where the email configuration settings are defined. 
 
    ```python
    # Configuration for sending emails
@@ -179,7 +179,6 @@ During the testing phase, if you encounter any issues with the Celery tasks rela
 
 ## Deploying a Django Backend Application and Configuring Static Files on PythonAnywhere
 
-If you've developed a Django backend application and want to deploy it on PythonAnywhere while also configuring static file mappings, follow these steps:
 
 1. **Log In/Create Account:**
    - If you don't have a PythonAnywhere account, sign up for one at [https://www.pythonanywhere.com/registration/register/beginner/](https://www.pythonanywhere.com/registration/register/beginner/).
@@ -190,8 +189,8 @@ If you've developed a Django backend application and want to deploy it on Python
    - Choose "Manual Configuration" and select the appropriate Python version.
 
 3. **Clone Your Repository:**
-   - From your Dashboard, navigate to the "Files" section.
-   - Clone your backend application's repository using Git:
+   - From your Dashboard, navigate to the "Console" section.
+   - Clone your backend application's repository using Git Bash:
      ```
      git clone [repository_url]
      ```
@@ -223,9 +222,13 @@ If you've developed a Django backend application and want to deploy it on Python
 7. **Configure Static Files:**
    - Scroll down to the "Static files" section.
    - Specify the URL path and directory of your static files.
+   - In the terminal run the following command:
+     ```
+     python manage.py collectstatic
+     ```
 
 8. **Database Configuration:**
-   - If your application uses a database, configure the database settings in your application and the PythonAnywhere database section.
+   - No need, because we are using Django's default DB
 
 9. **Restart Web App:**
    - Go back to the "Web" section and click the "Reload" button to apply your changes.
@@ -235,8 +238,7 @@ If you've developed a Django backend application and want to deploy it on Python
     - Check the "Errors" and "Server Logs" sections on PythonAnywhere for any issues or errors.
     - Test your deployed backend application to ensure it functions as expected.
 
-By following these steps, you'll successfully deploy your Django backend application on PythonAnywhere and configure static file mappings for your project.
-
+By following these steps, you'll successfully deploy your Django backend application on PythonAnywhere and configure static file mappings.
 
 ## Conclusion
 
