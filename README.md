@@ -47,9 +47,6 @@ Through this project, I've acquired a diverse set of skills and gained practical
   - Defining endpoints, functionalities, and usage for clear understanding and usability.
   - Focusing on clear endpoint descriptions, request-response formats, and authentication mechanisms for seamless integration.
 
-- **Collaboration and Support:**
-  - Offering user support via Telegram and engaging in discussions to provide assistance and share knowledge.
-
 This project has provided me with hands-on experience in various domains such as backend development, deployment strategies, security implementations, and effective communication of technical concepts. Notably, it has provided a significant focus on designing robust and efficient RESTful APIs.
 
 
