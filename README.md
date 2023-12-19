@@ -1,5 +1,14 @@
 # custom_user_auth 
+This project implements RESTful APIs for custom user functionalities such as shown below, utilizing Django Rest Framework (DRF) for seamless management of user-related operations.
 
+---
+### Features:
+- User Registration
+- User Login
+- OTP Verification
+- Profile Management
+- Logout
+- Account Deletion
 
 ### Used Technologies:
 
@@ -65,8 +74,14 @@ The project is now live on a hosting platform, offering accessible usage through
 
 1. **Explore via Swagger UI and Redoc:**
    Access the project's functionalities seamlessly using [Swagger UI(link)](https://nematulloh.pythonanywhere.com/swagger/) and [Redoc(link)](https://nematulloh.pythonanywhere.com/redoc/)
+   #### Usage:
+   - Register: Begin by registering a new user account.
+   - Login: Log in with your registered account using your email and password. After providing your email and password, verify the OTP you receive to obtain the authentication token.
+   - Profile Management: Fetch your user profile and update your profile information(using the authentication token).
+   - Logout: Log out from the current session(using the authentication token).
+   - Account Deletion: Delete your user account, if needed(using the authentication token).
 
-2. **Direct API Access:**
+3. **Direct API Access:**
    Interact with specific API endpoints by appending them to the base API path:
    - `/api/register/`
    - `/api/login/`
