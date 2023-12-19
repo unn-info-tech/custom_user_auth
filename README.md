@@ -1,5 +1,15 @@
 # custom_user_auth 
 
+
+### Used Technologies:
+
+- **Framework:** Django
+- **API Development:** Django Rest Framework (DRF)
+- **Task Management:** Celery
+- **Asynchronous Broker:** Redis
+- **Email Integration:** SMTP (Gmail)
+- **Hosting Platform:** PythonAnywhere
+
 ### Lessons Learned and Experience Acquired
 
 Through this project, I've acquired a diverse set of skills and gained practical knowledge in various aspects of backend development and deployment. Here's a summary of what I've learned:
