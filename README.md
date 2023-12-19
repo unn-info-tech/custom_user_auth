@@ -64,9 +64,7 @@ This project offered valuable hands-on experience across backend development, de
 The project is now live on a hosting platform, offering accessible usage through two options:
 
 1. **Explore via Swagger UI and Redoc:**
-   Access the project's functionalities seamlessly using Swagger UI and Redoc:
-   [Swagger UI Link](https://nematulloh.pythonanywhere.com/swagger/)
-   [Redoc Link](https://nematulloh.pythonanywhere.com/redoc/)
+   Access the project's functionalities seamlessly using [Swagger UI(link)](https://nematulloh.pythonanywhere.com/swagger/) and [Redoc(link)](https://nematulloh.pythonanywhere.com/redoc/)
 
 2. **Direct API Access:**
    Interact with specific API endpoints by appending them to the base API path:
