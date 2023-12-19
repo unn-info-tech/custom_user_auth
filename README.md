@@ -1,6 +1,6 @@
 # custom_user_auth 
 
-### Lessons Learned and Skills Acquired
+### Lessons Learned and Experience Acquired
 
 Through this project, I've acquired a diverse set of skills and gained practical knowledge in various aspects of backend development and deployment. Here's a summary of what I've learned:
 
