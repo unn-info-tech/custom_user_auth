@@ -21,7 +21,7 @@ This project implements RESTful APIs for custom user functionalities such as sho
 - **Email Integration:** SMTP (Gmail)
 - **Hosting Platform:** PythonAnywhere
 
-### Lessons Learned and Experience Acquired
+### Gained Experience and Skills
 
 Through this project, I've acquired a diverse set of skills and gained practical knowledge in various aspects of backend development and deployment. Here's a summary of what I've learned:
 
