@@ -23,30 +23,18 @@ This project implements Custom User RESTful APIs with token-based Authentication
 - **Hosting Platform:** PythonAnywhere
 
 
-### Gained Experience and Skills
+## Gained Experience and Skills
 
-Throughout this project, I've acquired an array of skills and hands-on experience in backend development, deployment, and security practices.
-Here's a summary of what I've learned:
+- Django & DRF: Built RESTful APIs for user operations and authentication.
+- Database Management: Conducted migrations and managed Django's ORM.
+- Celery and Redis: Implemented asynchronous tasks like OTP via email.
+- Email Integration: Configured secure SMTP settings and integrated with Gmail.
+- Deployment: Successfully deployed Django apps on PythonAnywhere.
+- Best Practices: Maintained coding standards and project documentation.
+- Debugging & Monitoring: Proficient in resolving deployment issues.
+- Security: Implemented token-based authentication and managed sensitive data.
+- API Design & Documentation: Created comprehensive API docs using Swagger UI and Redoc."
 
-- **Django & Django Rest Framework (DRF):** Developed robust RESTful APIs, managing authentication, user registration, and profiles efficiently.
-
-- **Database Operations:** Executed migrations, managed data models, and administered backend using Django's ORM.
-
-- **Celery and Redis Integration:** Implemented asynchronous tasks, particularly for OTP (one-time password) sending via email.
-
-- **Email Integration in Django:** Configured email settings and security measures using SMTP, integrated with Gmail for secure communication.
-
-- **Deployment (PythonAnywhere):** Deployed Django apps, handled static files, and configured web apps on hosting platforms.
-
-- **Best Practices:** Adhered to coding standards, documentation, and project organization best practices.
-
-- **Debugging & Monitoring:** Proficient in identifying and resolving deployment issues through log monitoring and error debugging.
-
-- **Security Practices:** Implemented token-based authentication, managed sensitive data securely, and created custom user models for enhanced security.
-
-- **API Design & Documentation:** Developed comprehensive API documentation using Swagger UI and Redoc, ensuring clear endpoint descriptions and authentication mechanisms.
-
-This experience has enriched my knowledge in backend development, deployment strategies, and security practices.
 
 ## Access the Deployed Project
 
