@@ -25,15 +25,15 @@ This project implements Custom User RESTful APIs with token-based Authentication
 
 ## Gained Experience and Skills
 
-- Django & DRF: Built RESTful APIs for user operations and authentication.
-- Database Management: Conducted migrations and managed Django's ORM.
-- Celery and Redis: Implemented asynchronous tasks like OTP via email.
-- Email Integration: Configured secure SMTP settings and integrated with Gmail.
-- Deployment: Successfully deployed Django apps on PythonAnywhere.
-- Best Practices: Maintained coding standards and project documentation.
-- Debugging & Monitoring: Proficient in resolving deployment issues.
-- Security: Implemented token-based authentication and managed sensitive data.
-- API Design & Documentation: Created comprehensive API docs using Swagger UI and Redoc."
+- **Django & DRF:** Built RESTful APIs for user operations and authentication.
+- **Database Management:** Conducted migrations and managed Django's ORM.
+- **Celery and Redis:** Implemented asynchronous tasks like OTP via email.
+- **Email Integration:** Configured secure SMTP settings and integrated with Gmail.
+- **Deployment:** Successfully deployed Django apps on PythonAnywhere.
+- **Best Practices:** Maintained coding standards and project documentation.
+- **Debugging & Monitoring:** Proficient in resolving deployment issues.
+- **Security:** Implemented token-based authentication and managed sensitive data.
+- **API Design & Documentation:** Created comprehensive API docs using Swagger UI and Redoc.
 
 
 ## Access the Deployed Project
