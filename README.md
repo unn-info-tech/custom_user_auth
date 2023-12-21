@@ -1,7 +1,8 @@
 # custom_user_auth 
 
+
 ## Introduction
-This project implements RESTful APIs for custom user functionalities such as shown below, utilizing Django Rest Framework (DRF) for seamless management of user-related operations.
+This project implements Custom User RESTful APIs with token-based Authentication and Authorization, utilizing Django Rest Framework (DRF) for seamless management of various user-related operations.
 
 
 ### Features:
