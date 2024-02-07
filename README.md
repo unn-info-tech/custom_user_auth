@@ -249,9 +249,6 @@ By following these steps, you'll successfully deploy your Django backend applica
 
 Thank you for your interest in exploring this project. I hope this README has provided you with a clear understanding of the deployment process and how to interact with the project's APIs. Feel free to access the deployed project through the provided links and explore its functionalities.
 
-If you're looking for further assistance, have questions, or want to discuss any aspect of this project, I'm always available on Telegram:
-
-**Telegram:** [@nematulloh_uktamov](https://t.me/nematulloh_uktamov)
 
 Best regards and good luck on your journey with this project!
 
